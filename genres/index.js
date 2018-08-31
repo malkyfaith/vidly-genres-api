@@ -3,8 +3,6 @@ const genresRoute = express.Router();
 const Joi = require('joi');
 const { Genre } = require('../models/genre');
 
-const genres = [{ id: 1, name: 'Action' }, { id: 2, name: 'Horror' }, { id: 3, name: 'Comdey' }];
-
 genresRoute.get('/', async (req, res) => {
     const genres = await Genre.find({}).sort('name');
     res.send(genres);
