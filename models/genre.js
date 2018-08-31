@@ -1,9 +1,14 @@
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// const GenreSchema = mongoose.Schema({
-//     name: String
-// });
+const GenreSchema = mongoose.Schema({
+    name: {
+        type: String,
+        minlength: 3,
+        maxlength: 50,
+        required: true
+    }
+});
 
-// const Genre = mongoose.model('genre', GenreSchema);
+const Genre = mongoose.model('genre', GenreSchema);
 
-// module.exports = { Genre };
+module.exports = { Genre };

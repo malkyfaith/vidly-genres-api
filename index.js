@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+require('./db/db');
 const { genresRoute } = require('./genres/')
 // create app
 const app = express();
@@ -9,8 +9,6 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/genres', genresRoute);
-
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
