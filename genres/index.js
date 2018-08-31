@@ -41,7 +41,7 @@ genresRoute.put('/:id', async (req, res) => {
     const genre = await Genre.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true});
     if (!genre) return res.status(404).send('The genre with the given ID was not found.');
     
-    res.send(genre);
+    res.send(genre); 
 });
 
 function validateGenres(genre) {
