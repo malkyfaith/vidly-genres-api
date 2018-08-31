@@ -11,4 +11,4 @@ const GenreSchema = mongoose.Schema({
 
 const Genre = mongoose.model('genre', GenreSchema);
 
-module.exports = { Genre };
+module.exports = { Genre, GenreSchema };
