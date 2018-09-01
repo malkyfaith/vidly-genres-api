@@ -2,17 +2,16 @@ const express = require('express');
 const genresRoute = express.Router();
 const Joi = require('joi');
 const { Genre } = require('../models/genre');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+
 
 genresRoute.get('/', async (req, res) => {
-    try {
-        const genres = await Genre.find({}).sort('name');
-        res.send(genres);
-    } catch (e) {
-        res.status(500).send("Something wrong");
-    }
-})
+    const genres = await Genre.find({}).sort('name');
+    res.send(genres);
+});
 
-genresRoute.post('/', async (req, res) => {
+genresRoute.post('/', auth, async (req, res) => {
     const { error } = validateGenres(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -29,7 +28,7 @@ genresRoute.get('/:id', async (req, res) => {
     res.send(genre);
 });
 
-genresRoute.delete('/:id', async (req, res) => {
+genresRoute.delete('/:id', [auth, admin], async (req, res) => {
     const deletedGenre = await Genre.findByIdAndRemove(req.params.id);
     if (!deletedGenre) return res.status(404).send('The genre with the given ID was not found.');
 

@@ -1,24 +1,21 @@
+
 const express = require('express');
-const bodyParser = require('body-parser');
-require('./db/db');
-const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
-const { genresRoute } = require('./genres/');
-const { customerRoute } = require('./customer/');
-const { movieRoute } = require('./movie/');
-const { rentalRoute } = require('./rental/');
-const { usersRoute } = require('./users/');
+const winston = require('winston');
+require('winston-mongodb');
+require('express-async-errors');
 // create app
 const app = express();
+// logging module
+require('./startup/logging')
+// db module
+require('./startup/db')();
+// routes
+require('./startup/routes')(app);
+// config
+require('./startup/config')();
 
-// middleware
-app.use(express.json());
-
-app.use('/api/genres', genresRoute);
-app.use('/api/customer', customerRoute);
-app.use('/api/movie', movieRoute);
-app.use('/api/rental', rentalRoute);
-app.use('/api/users', usersRoute);
+//throw new Error('Error during start up');
+Promise.reject('unhandled rejection')
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
